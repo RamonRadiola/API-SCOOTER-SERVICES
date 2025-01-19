@@ -41,4 +41,5 @@ class TestCreateCourier:
         payload = GenDataCourier.generate_data_for_register_new_courier()
         payload["login"] = data["login"]
         response_second = requests.post(Constants.URL_COURIER, data=payload)
-        assert 409 == response_second.status_code
+        error_message = response_second.json().get("message")
+        assert 409 == response_second.status_code and error_message == "Этот логин уже используется. Попробуйте другой."
